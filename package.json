@@ -4,7 +4,7 @@
   "description": "a standard babel setup",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./index.js --exec babel-node -e js"
+    "start": "nodemon --exec babel-node ./index.js"
   },
   "keywords": [
     "babel",
@@ -18,9 +18,10 @@
     "babel-preset-stage-0": "^6.24.1"
   },
   "dependencies": {
+    "@babel/cli": "^7.24.1",
     "express": "^4.19.2",
     "express-graphql": "^0.12.0",
-    "graphql": "^16.8.1",
+    "graphql": "^15.8.0",
     "nanoid": "^5.0.7",
     "nodemon": "^2.0.6"
   }
