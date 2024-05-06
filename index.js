@@ -1,22 +1,31 @@
-import express from "express";
-import resolvers from './resolvers'
-import schema from './schema'
-import {graphqlHTTP} from "express-graphql"
-import { validateSchema } from "graphql";
+class Course {
+  constructor(
+    id,
+    { courseName, category, price, language, email, stack, teachingAssists }
+  ) {
+    this.id = id;
+    this.courseName = courseName;
+    this.category = category;
+    this.price = price;
+    this.language = language;
+    this.email = email;
+    this.stack = stack;
+    this.teachingAssists = teachingAssists;
+  }
+}
 
-const app = express();
+const courseHolder = {};
 
-app.get("/", (req, res) => {
-  res.send("Up and running with graphql");
-});
+const resolvers = {
+  getCourse: ({ id }) => {
+    return new Course(id, courseHolder[id]);
+  },
+  createCourse: async ({ input }) => {
+    const { nanoid } = await import("nanoid");
+    let id = nanoid();
+    courseHolder[id] = input;
+    return new Course(id, input);
+  },
+};
 
-const root = {lco: () => console.log("LearnCodeOnline.i n")}
-
-app.use('/graphql', graphqlHTTP({
-    schema: schema,
-    rootValue: root,
-    graphiql: true
-
-}))
-
-app.listen(8082, () => console.log("Running at 8082"));
+module.exports = resolvers;

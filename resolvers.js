@@ -1,10 +1,7 @@
-
+import { nanoid } from 'nanoid';
 
 class Course {
-  constructor(
-    id,
-    { courseName, category, price, language, email, stack, teachingAssists }
-  ) {
+  constructor(id, { courseName, category, price, language, email, stack, teachingAssists }) {
     this.id = id;
     this.courseName = courseName;
     this.category = category;
@@ -16,22 +13,17 @@ class Course {
   }
 }
 
-
-const courseholder = {
-
-}
-
+const courseHolder = {};
 
 const resolvers = {
-    getCourse: ({id}) => {
-        return new Course(id, courseholder[id])
-    }, 
-    createCourse: async({input}) => {
-        let {nanoid} = await import('nanoid');
-        let id = nanoid();
-        courseholder[id] = input
-        return new Course(id, input)
-    }
-}
+  getCourse: ({ id }) => {
+    return new Course(id, courseHolder[id]);
+  },
+  createCourse: ({ input }) => {
+    let id = nanoid();
+    courseHolder[id] = input;
+    return new Course(id, input);
+  },
+};
 
-export default resolvers;
+module.exports = resolvers;
